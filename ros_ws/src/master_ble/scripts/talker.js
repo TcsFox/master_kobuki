@@ -26,15 +26,8 @@
 const rosnodejs = require('rosnodejs');
 // Requires the std_msgs message package
 const std_msgs = rosnodejs.require('std_msgs').msg;
+const bleno = require('bleno');
 
-var bleno = require('bleno');
-
-function getLocations() {
-  rosnodejs.initNode('/advertiser')
-    .then((rosNode) => {
-      let sub = rosNode.subscribe("/ar_pose_marker")
-    })
-}
 
 function initBLE() {
   console.log("we gte here");
@@ -42,8 +35,9 @@ function initBLE() {
     rosnodejs.log.info('on -> statechange: ' + state);
     if (state === 'poweredOn') {
 
+      var buf = Buffer.alloc(31)
 
-      bleno.startAdvertisingWithEIRData()
+      bleno.startAdvertisingWithEIRData(buf)
     } else {
       bleno.stopAdvertising();
     }
@@ -58,5 +52,4 @@ function initBLE() {
 if (require.main === module) {
   // Invoke Main Talker Function
   initBLE();
-  talker();
 }
