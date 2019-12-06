@@ -12,9 +12,10 @@ def serialize_alvar():
     for num in tags:
       x,y = None, None
       try:
-	trans = tfBuffer.lookup_transform("ar_marker_"+num, "base")
+	trans = tfBuffer.lookup_transform("ar_marker_"+num, "usb_cam")
       	x, y = trans.transform.translation.x, trans.transform.translation.y
       	print("x,y for ", num, "is: ", "x: ", x, "y: ", y)
+	rospy.loginfo("found num: ", num)
 	found = True
       except:
         pass
